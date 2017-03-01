@@ -1,25 +1,23 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Farm(models.Model):
-    farm_id = models.IntegerField()
+    farm_id = models.IntegerField(blank=True, null=True)
     name = models.CharField(max_length=300)
-    address = models.TextField()
+    address = models.TextField(blank=True, null=True)
 
 
 class FmdData(models.Model):
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=300)
     fmd = models.ForeignKey(Farm)
+    farm_condition = models.TextField(blank=True, null=True)
+    bgp_requirements = models.TextField(blank=True, null=True)
+    corrective_action = models.TextField(blank=True, null=True)
 
-    date_observed = models.DateField()
-    time_observed = models.TimeField()
+    observed = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
-    farm_condition = models.TextField()
-    bgp_requirements = models.TextField()
-    corrective_action = models.TextField()
+    hand_delivered = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
-    hand_delivered_date = models.DateField()
-    hand_delivered_time = models.TimeField()
-
-    corrected_date = models.DateField()
-    corrected_time = models.TimeField()
+    corrected = models.DateTimeField(auto_now_add=True, blank=True, null=True)
